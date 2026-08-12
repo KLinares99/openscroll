@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b0b0f;
+  --bg-soft: #16161d;
+  --line: #272733;
+  --fg: #f2efe9;
+  --fg-dim: #9a9aa8;
+  --accent: #d4ac60;
+  --red: #e0674f;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: #fbfaf7;
+  --bg-soft: #ffffff;
+  --line: #e4e0d8;
+  --fg: #1a1a1f;
+  --fg-dim: #6b6b76;
+  --accent: #9a6f18;
+  --red: #b3311c;
+  color-scheme: light;
+}
+
+[data-theme='sepia'] {
+  --bg: #f3e9d6;
+  --bg-soft: #fbf4e6;
+  --line: #ddcfb4;
+  --fg: #2f2618;
+  --fg-dim: #75674f;
+  --accent: #8a6212;
+  --red: #a83a1e;
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* The feed: one verse per viewport, snapping like a short-video app. */
+.feed {
+  height: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.feed::-webkit-scrollbar {
+  display: none;
+}
+.slide {
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.verse-type {
+  font-family: 'Iowan Old Style', Palatino, Georgia, ui-serif, serif;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.jesus {
+  color: var(--red);
+}
+
+/* KJV italicises words supplied by the translators. */
+.supplied {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.sheet-enter {
+  animation: sheet-up 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade 260ms ease both;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}

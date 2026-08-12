@@ -1,0 +1,12 @@
+node_modules
+dist
+shots
+
+# Scratch files from local debugging.
+dbg.mjs
+navcheck.mjs
+
+# Generated at build time by `npm run data` — never committed, so the repo
+# stays small and the scripture data always matches the pipeline.
+public/data
+.data-cache
