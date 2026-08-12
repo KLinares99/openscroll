@@ -35,6 +35,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Generate app icons
+        run: npm run icons
+
       - name: Build scripture data
         run: npm run data
 

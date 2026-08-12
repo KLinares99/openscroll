@@ -66,8 +66,12 @@ npm run data     # download sources and compile public/data (~39 MB, once)
 npm run dev
 npm run build
 npm run preview  # serves at /openscroll/
-npm run icons    # regenerate PWA icons
+npm run icons    # generate PWA icons into public/
 ```
+
+`public/data` and the PWA icons are both generated artifacts and are not
+committed — `scripts/build-data.mjs` and `scripts/generate-icons.mjs` are the
+source of truth, and CI regenerates both on every deploy.
 
 End-to-end test (needs `npm run preview` running in another shell):
 
