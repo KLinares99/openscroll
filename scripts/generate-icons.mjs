@@ -138,30 +138,39 @@ function paint(size, scale, draw) {
   return out
 }
 
+/**
+ * The mark: a scroll held between two thick gold rods.
+ *
+ * Proportions were settled by generating candidate artwork and checking which
+ * silhouette survived being shrunk to 40px — the winner filled the frame, used
+ * heavy rods, and carried almost no interior detail. Drawing it rather than
+ * embedding a bitmap keeps every size pixel-crisp and the whole mark under 6 KB.
+ */
 function drawMark(p, inset = 0) {
   const k = 1 - inset * 2
   const at = (v) => inset + v * k
+  const s = (v) => v * k
 
   p.fill(BG)
 
-  // Parchment body.
-  p.rect(at(0.26), at(0.2), 0.48 * k, 0.6 * k, 0.04 * k, PARCHMENT)
+  // Parchment panel, spanning the gap between the two rods.
+  p.rect(at(0.235), at(0.285), s(0.53), s(0.43), s(0.025), PARCHMENT)
 
-  // Rolled ends, top and bottom.
-  p.rect(at(0.18), at(0.15), 0.64 * k, 0.1 * k, 0.05 * k, GOLD)
-  p.rect(at(0.18), at(0.75), 0.64 * k, 0.1 * k, 0.05 * k, GOLD)
-  p.ellipse(at(0.18), at(0.2), 0.045 * k, 0.05 * k, GOLD_DEEP)
-  p.ellipse(at(0.82), at(0.2), 0.045 * k, 0.05 * k, GOLD_DEEP)
-  p.ellipse(at(0.18), at(0.8), 0.045 * k, 0.05 * k, GOLD_DEEP)
-  p.ellipse(at(0.82), at(0.8), 0.045 * k, 0.05 * k, GOLD_DEEP)
+  // A single soft crease keeps the panel from reading as a plain rectangle
+  // without adding detail that would muddy at small sizes.
+  p.rect(at(0.235), at(0.495), s(0.53), s(0.012), 0, GOLD_DEEP, 0.16)
 
-  // Lines of text on the parchment — the middle one is short, like a verse end.
-  const lines = [
-    [0.33, 0.34], [0.33, 0.34], [0.33, 0.22],
-  ]
-  lines.forEach(([x, w], i) => {
-    p.rect(at(x), at(0.36 + i * 0.11), w * k, 0.035 * k, 0.018 * k, GOLD_DEEP, 0.9)
-  })
+  // The two rods, wider than the panel so the silhouette reads as a scroll.
+  for (const y of [0.205, 0.715]) {
+    p.rect(at(0.125), at(y), s(0.75), s(0.08), s(0.04), GOLD)
+  }
+
+  // Darker caps at each rod end, which is what sells the rolled form.
+  for (const y of [0.245, 0.755]) {
+    for (const x of [0.125, 0.875]) {
+      p.ellipse(at(x), at(y), s(0.052), s(0.058), GOLD_DEEP)
+    }
+  }
 }
 
 const targets = [
